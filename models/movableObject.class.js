@@ -1,4 +1,4 @@
-class MovableObject extends DrawableObject{
+class MovableObject extends DrawableObject {
     speed = 0.15;
     otherDirection = false;
     speedY = 0;
@@ -42,7 +42,11 @@ class MovableObject extends DrawableObject{
     }
 
     isAboveGround() {
-        return this.y <= 150;
+        if (this instanceof ThrowableObject) {
+            return true;
+        } else {
+            return this.y <= 150;
+        }
     }
 
     playAnimation(images) {

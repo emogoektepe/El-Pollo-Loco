@@ -49,7 +49,7 @@ class Character extends MovableObject {
         this.applyGravity();
         this.animate();
     }
-
+    
     animate() {
         this.walking_sound.volume = 0.1; // ratio button late game
         setInterval(() => {
