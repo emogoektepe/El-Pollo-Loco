@@ -40,6 +40,13 @@ class Character extends MovableObject {
     world;
     walking_sound = new Audio('audio/walk.mp3');
 
+    offset = {
+        top: 110,
+        bottom: 10,
+        left: 20,
+        right: 20
+    }
+
     constructor() {
         super().loadImage('img/2_character_pepe/1_idle/idle/I-1.png');
         this.loadImages(this.IMAGES_WALKING);
@@ -49,7 +56,7 @@ class Character extends MovableObject {
         this.applyGravity();
         this.animate();
     }
-    
+
     animate() {
         this.walking_sound.volume = 0.1; // ratio button late game
         setInterval(() => {

@@ -22,7 +22,7 @@ class World {
         setInterval(() => {
             this.checkCollisions();
             this.checkThrowObjects();
-        }, 200);
+        }, 100);
     }
 
     checkThrowObjects() {
@@ -36,6 +36,7 @@ class World {
         this.level.enemies.forEach((enemy) => {
             if (this.character.isColliding(enemy)) {
                 this.character.hit();
+                debugger;
                 this.statusBar.setPercentage(this.character.energy);
             }
         });
@@ -79,6 +80,7 @@ class World {
         }
         movableObject.draw(this.ctx);
         movableObject.drawFrame(this.ctx);
+        movableObject.drawFrameOffSet(this.ctx);
         if (movableObject.otherDirection) {
             this.flipImageBack(movableObject);
         }
