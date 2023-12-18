@@ -18,7 +18,6 @@ class MovableObject extends DrawableObject {
     }
 
     hit() {
-        console.log(this.energy);
         this.energy -= 5;
         if (this.energy < 20) {
             this.energy = 0;
@@ -53,7 +52,7 @@ class MovableObject extends DrawableObject {
         if (this instanceof ThrowableObject) {
             return true;
         } else {
-            return this.y <= 150;
+            return this.y < 150;
         }
     }
 

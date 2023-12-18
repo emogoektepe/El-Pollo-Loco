@@ -5,8 +5,9 @@ const level1 = new Level(
         // new Chicken(),
         // new Endboss()
     ],
-    
-        createLevelObjects.creatingClouds(20)
+    createLevelObjects.creatingBackGroundLayer(5)
     ,
-        createLevelObjects.creatingBackGroundLayer(5)
+    createLevelObjects.creatingClouds(30)
+    ,
+
 );
