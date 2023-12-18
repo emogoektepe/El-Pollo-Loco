@@ -6,7 +6,6 @@ class MovableObject extends DrawableObject {
     energy = 100;
     lastHit = 0;
 
-
     offset = {
         top: 0,
         left: 0,
@@ -19,8 +18,9 @@ class MovableObject extends DrawableObject {
     }
 
     hit() {
+        console.log(this.energy);
         this.energy -= 5;
-        if (this.energy <= 0) {
+        if (this.energy < 20) {
             this.energy = 0;
         } else {
             this.lastHit = new Date().getTime();
