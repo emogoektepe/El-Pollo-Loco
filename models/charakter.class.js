@@ -61,10 +61,9 @@ class Character extends MovableObject {
         'img/2_character_pepe/1_idle/long_idle/I-19.png',
         'img/2_character_pepe/1_idle/long_idle/I-20.png',
     ]
-
     world;
     walking_sound = new Audio('audio/walk.mp3');
-
+    timer = 0;
     offset = {
         top: 110,
         bottom: 10,
@@ -93,7 +92,7 @@ class Character extends MovableObject {
                 this.otherDirection = false;
                 this.walking_sound.play();
             }
-            if (this.world.keyboard.LEFT && this.x > 0) {
+            if (this.world.keyboard.LEFT && this.x > -1300) {
                 this.moveLeft();
                 this.otherDirection = true;
                 this.walking_sound.play();
@@ -106,19 +105,23 @@ class Character extends MovableObject {
 
         setInterval(() => {
             if (this.isDead()) {
+                this.timer = 0;
                 this.playAnimation(this.IMAGES_DEAD);
             } else if (this.isHurt()) {
+                this.timer = 0;
                 this.playAnimation(this.IMAGES_HURT);
             } else if (this.isAboveGround()) {
+                this.timer = 0;
                 this.playAnimation(this.IMAGES_JUMPING);
             } else if (this.world.keyboard.RIGHT || this.world.keyboard.LEFT) {
-                // walk animation
+                this.timer = 0;
                 this.playAnimation(this.IMAGES_WALKING);
-            } else {
+            } else if (this.timer < 20) {
                 this.playAnimation(this.IMAGES_IDLE);
-                // TODO: LONG_IDLE after 2 seconds
-                // this.playAnimation(this.IMAGES_LONG_IDLE);
+            } else {
+                this.playAnimation(this.IMAGES_LONG_IDLE);
             }
+            this.timer++
         }, 150);
     }
 }

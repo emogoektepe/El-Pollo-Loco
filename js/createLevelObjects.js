@@ -30,7 +30,7 @@ const createLevelObjects = {
     creatingBackGroundLayer(levelWidth) {
         const backgroundArray = [];
         let imagesArraySwitch = true;
-        for (let i = -719; i <= 719 * levelWidth; i += 719) {
+        for (let i = -1438; i <= 719 * levelWidth; i += 719) {
             const currentImageArray = imagesArraySwitch ? this.backgroundImages2 : this.backgroundImages1;
             for (let j = 0; j < 3; j++) {
                 backgroundArray.push(new BackgroundObject(currentImageArray[j], i));
