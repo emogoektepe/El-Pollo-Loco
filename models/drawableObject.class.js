@@ -7,9 +7,33 @@ class DrawableObject {
     height = 150;
     width = 100;
     coinProg = 0;
+    bottleProg = 0;
 
-    constructor() {
+    getImageIndex() {
+        if (this.percentage >= 100) {
+            return 5;
+        } else if (this.percentage >= 80) {
+            return 4;
+        } else if (this.percentage >= 60) {
+            return 3;
+        } else if (this.percentage >= 40) {
+            return 2;
+        } else if (this.percentage >= 20) {
+            return 1;
+        } else {
+            return 0;
+        }
+    }
 
+    setPercentage(percentage) {
+        this.percentage = percentage;
+        let path = this.IMAGES[this.getImageIndex()];
+        this.img = this.imageCache[path];
+    }
+
+    collectBottel() {
+        this.bottleProg += 15;
+        return this.bottleProg;
     }
 
     collectCoin() {
@@ -18,7 +42,7 @@ class DrawableObject {
     }
 
     drawFrame(ctx) {
-        if (this instanceof Character || this instanceof Chicken || this instanceof Coin || this instanceof ThrowableObject) {
+        if (this instanceof Character || this instanceof Chicken || this instanceof Coin || this instanceof ThrowableObject || this instanceof Bottle) {
             ctx.beginPath();
             ctx.lineWidth = '5';
             ctx.strokeStyle = 'blue';
@@ -28,7 +52,7 @@ class DrawableObject {
     }
 
     drawFrameOffSet(ctx) {
-        if (this instanceof Character || this instanceof Chicken || this instanceof Coin || this instanceof ThrowableObject) {
+        if (this instanceof Character || this instanceof Chicken || this instanceof Coin || this instanceof ThrowableObject || this instanceof Bottle) {
             ctx.beginPath();
             ctx.lineWidth = '2';
             ctx.strokeStyle = 'red';

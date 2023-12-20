@@ -10,6 +10,8 @@ class World {
     statusBarBottle = new StatusBarBottle();
     throwableObjects = [];
     coin_sound = new Audio('audio/coin.mp3');
+    bottle_sound = new Audio('audio/bottleCollect.mp3');
+    bottle_throw = new Audio('audio/bottleThrow.mp3');
     throwCooldown = false;
 
     constructor(canvas, keyboard) {
@@ -17,6 +19,7 @@ class World {
         this.canvas = canvas;
         this.keyboard = keyboard;
         this.pushCoins();
+        this.pushBottle();
         this.draw();
         this.setWorld();
         this.run();
@@ -30,8 +33,10 @@ class World {
     }
 
     checkThrowObjects() {
+        this.bottle_throw.volume = 0.1;
         if (this.keyboard.B && !this.throwCooldown) {
             let bottle = new ThrowableObject(this.character.x + 100, this.character.y + 100);
+            this.bottle_throw.play();
             this.throwableObjects.push(bottle);
             this.throwCooldown = true;
             setTimeout(() => {
@@ -54,7 +59,27 @@ class World {
                 this.level.coins = this.level.coins.filter(obj => obj.id !== coin.id);
                 this.statusBarCoin.setPercentage(this.statusBarCoin.collectCoin());
             }
-        })
+        });
+        this.bottle_sound.volume = 0.1;
+        this.level.bottle.forEach((bottle) => {
+            if (this.character.isColliding(bottle)) {
+                this.bottle_sound.play();
+                this.level.bottle = this.level.bottle.filter(obj => obj.id !== bottle.id);
+                this.statusBarBottle.setPercentage(this.statusBarBottle.collectBottel());
+            }
+        });
+    }
+
+    pushBottle() {
+        for (let i = 0; i < 9; i++) {
+            let imagePath;
+            if (Math.random() < 0.5) {
+                imagePath = 'img/6_salsa_bottle/2_salsa_bottle_on_ground.png';
+            } else {
+                imagePath = 'img/6_salsa_bottle/1_salsa_bottle_on_ground.png';
+            }
+            this.level.bottle.push(new Bottle(i, imagePath));
+        }
     }
 
     pushCoins() {
@@ -75,6 +100,7 @@ class World {
         this.addObjectsToMap(this.level.clouds);
         this.addObjectsToMap(this.level.enemies);
         this.addObjectsToMap(this.level.coins);
+        this.addObjectsToMap(this.level.bottle);
         this.addObjectsToMap(this.throwableObjects);
         this.ctx.translate(-this.camera_x, 0);
         // fixed objects here
@@ -103,8 +129,8 @@ class World {
             this.flipImage(movableObject);
         }
         movableObject.draw(this.ctx);
-        movableObject.drawFrame(this.ctx);
-        movableObject.drawFrameOffSet(this.ctx);
+        // movableObject.drawFrame(this.ctx);
+        // movableObject.drawFrameOffSet(this.ctx);
         if (movableObject.otherDirection) {
             this.flipImageBack(movableObject);
         }
