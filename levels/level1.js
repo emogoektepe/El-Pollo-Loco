@@ -9,7 +9,5 @@ const level1 = new Level(
     ,
     createLevelObjects.creatingClouds(30)
     ,
-    [
-        // coins filled from world (pushCoins())
-    ]
+    [/*coins filled from world (pushCoins())*/]
 );

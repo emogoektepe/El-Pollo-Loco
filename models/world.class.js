@@ -7,6 +7,7 @@ class World {
     camera_x = 0;
     statusBarHealth = new StatusBarHealth();
     statusBarCoin = new StatusBarCoin();
+    statusBarBottle = new StatusBarBottle();
     throwableObjects = [];
     coin_sound = new Audio('audio/coin.mp3');
     throwCooldown = false;
@@ -79,6 +80,7 @@ class World {
         // fixed objects here
         this.addToMap(this.statusBarHealth);
         this.addToMap(this.statusBarCoin);
+        this.addToMap(this.statusBarBottle);
         this.ctx.translate(this.camera_x, 0);
         this.addToMap(this.character);
 
