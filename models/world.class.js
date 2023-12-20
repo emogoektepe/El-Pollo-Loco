@@ -8,11 +8,13 @@ class World {
     statusBarHealth = new StatusBarHealth();
     statusBarCoin = new StatusBarCoin();
     throwableObjects = [];
+    coin_sound = new Audio('audio/coin.mp3');
 
     constructor(canvas, keyboard) {
         this.ctx = canvas.getContext('2d');
         this.canvas = canvas;
         this.keyboard = keyboard;
+        this.pushCoins();
         this.draw();
         this.setWorld();
         this.run();
@@ -39,6 +41,20 @@ class World {
                 this.statusBarHealth.setPercentage(this.character.energy);
             }
         });
+        this.coin_sound.volume = 0.1;
+        this.level.coins.forEach((coin) => {
+            if (this.character.isColliding(coin)) {
+                this.coin_sound.play();
+                this.level.coins = this.level.coins.filter(obj => obj.id !== coin.id);
+                this.statusBarCoin.setPercentage(this.statusBarCoin.collectCoin());
+            }
+        })
+    }
+
+    pushCoins() {
+        for (let i = 0; i < 7; i++) {
+            this.level.coins.push(new Coin(i));
+        }
     }
 
     setWorld() {
@@ -52,6 +68,7 @@ class World {
         this.addObjectsToMap(this.level.backgroundObjects);
         this.addObjectsToMap(this.level.clouds);
         this.addObjectsToMap(this.level.enemies);
+        this.addObjectsToMap(this.level.coins);
         this.addObjectsToMap(this.throwableObjects);
         this.ctx.translate(-this.camera_x, 0);
         // fixed objects here
