@@ -9,6 +9,7 @@ class World {
     statusBarCoin = new StatusBarCoin();
     throwableObjects = [];
     coin_sound = new Audio('audio/coin.mp3');
+    throwCooldown = false;
 
     constructor(canvas, keyboard) {
         this.ctx = canvas.getContext('2d');
@@ -24,13 +25,17 @@ class World {
         setInterval(() => {
             this.checkCollisions();
             this.checkThrowObjects();
-        }, 100);
+        }, 50);
     }
 
     checkThrowObjects() {
-        if (this.keyboard.B) {
+        if (this.keyboard.B && !this.throwCooldown) {
             let bottle = new ThrowableObject(this.character.x + 100, this.character.y + 100);
             this.throwableObjects.push(bottle);
+            this.throwCooldown = true;
+            setTimeout(() => {
+                this.throwCooldown = false;
+            }, 500);
         }
     }
 
@@ -52,7 +57,7 @@ class World {
     }
 
     pushCoins() {
-        for (let i = 0; i < 7; i++) {
+        for (let i = 0; i < 10; i++) {
             this.level.coins.push(new Coin(i));
         }
     }

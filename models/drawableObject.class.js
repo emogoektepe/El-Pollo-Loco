@@ -13,12 +13,12 @@ class DrawableObject {
     }
 
     collectCoin() {
-        this.coinProg += 15;
+        this.coinProg += 10;
         return this.coinProg;
     }
 
     drawFrame(ctx) {
-        if (this instanceof Character || this instanceof Chicken || this instanceof Coin) {
+        if (this instanceof Character || this instanceof Chicken || this instanceof Coin || this instanceof ThrowableObject) {
             ctx.beginPath();
             ctx.lineWidth = '5';
             ctx.strokeStyle = 'blue';
@@ -28,7 +28,7 @@ class DrawableObject {
     }
 
     drawFrameOffSet(ctx) {
-        if (this instanceof Character || this instanceof Chicken || this instanceof Coin) {
+        if (this instanceof Character || this instanceof Chicken || this instanceof Coin || this instanceof ThrowableObject) {
             ctx.beginPath();
             ctx.lineWidth = '2';
             ctx.strokeStyle = 'red';

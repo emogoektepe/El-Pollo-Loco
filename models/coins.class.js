@@ -16,9 +16,7 @@ class Coin extends MovableObject {
     constructor(id) {
         super().loadImage('img/8_coin/coin_2.png');
         this.x = Coin.coinX;
-        if (Coin.coinX <= 2000) {
-            Coin.coinX += 300;
-        }
+        Coin.coinX += 400;
         this.id = id
     }
 
