@@ -34,9 +34,10 @@ class World {
 
     checkThrowObjects() {
         this.bottle_throw.volume = 0.1;
-        if (this.keyboard.B && !this.throwCooldown) {
+        if (this.keyboard.B && !this.throwCooldown && this.statusBarBottle.percentage != 0) {
             let bottle = new ThrowableObject(this.character.x + 100, this.character.y + 100);
             this.bottle_throw.play();
+            this.statusBarBottle.setPercentage(this.statusBarBottle.throwBottle());
             this.throwableObjects.push(bottle);
             this.throwCooldown = true;
             setTimeout(() => {
@@ -71,7 +72,7 @@ class World {
     }
 
     pushBottle() {
-        for (let i = 0; i < 9; i++) {
+        for (let i = 0; i < 5; i++) {
             let imagePath;
             if (Math.random() < 0.5) {
                 imagePath = 'img/6_salsa_bottle/2_salsa_bottle_on_ground.png';
@@ -130,7 +131,7 @@ class World {
         }
         movableObject.draw(this.ctx);
         // movableObject.drawFrame(this.ctx);
-        // movableObject.drawFrameOffSet(this.ctx);
+        movableObject.drawFrameOffSet(this.ctx);
         if (movableObject.otherDirection) {
             this.flipImageBack(movableObject);
         }

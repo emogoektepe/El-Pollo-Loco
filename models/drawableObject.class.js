@@ -31,8 +31,13 @@ class DrawableObject {
         this.img = this.imageCache[path];
     }
 
+    throwBottle() {
+        this.bottleProg -= 20;
+        return this.bottleProg;
+    }
+
     collectBottel() {
-        this.bottleProg += 15;
+        this.bottleProg += 20;
         return this.bottleProg;
     }
 
