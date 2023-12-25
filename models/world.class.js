@@ -51,12 +51,12 @@ class World {
         this.damage_chicken.volume = 0.1;
         this.level.enemies.forEach((enemy) => {
             if (this.character.isColliding(enemy)) {
-                if (this.character.isAboveGround()) {
+                if (this.character.isAboveGround() && enemy instanceof Chicken) {
                     this.character.jump();
-                    enemy.hitEnemy();
+                    enemy.hitChicken();
                     this.damage_chicken.play();
                     this.level.enemies = this.level.enemies.filter(obj => obj.id !== enemy.id);
-                } else {
+                } else if (enemy instanceof Chicken || enemy instanceof Endboss) {
                     this.character.hit();
                     this.statusBarHealth.setPercentage(this.character.energy);
                 }
@@ -78,8 +78,32 @@ class World {
                 this.statusBarBottle.setPercentage(this.statusBarBottle.collectBottel());
             }
         });
+        const endboss = this.level.enemies.slice(-1)[0];
+        this.throwableObjects.forEach((bottle) => {
+            this.level.enemies.forEach((enemy) => {
+                if (bottle.isColliding(enemy) && enemy instanceof Chicken) {
+                    bottle.shatterBottle();
+                    enemy.hitChicken();
+                    setTimeout(() => {
+                        this.throwableObjects.pop();
+                    }, 100);
+                    this.damage_chicken.play();
+                    this.level.enemies = this.level.enemies.filter(obj => obj.id !== enemy.id);
+                } else if (bottle.isColliding(enemy) && enemy instanceof Endboss) {
+                    bottle.shatterBottle();
+                    enemy.hitBossChicken();
+                    setTimeout(() => {
+                        this.throwableObjects.pop();
+                    }, 100);
+                    this.damage_chicken.play();
+                    if (endboss.energy <= 0) {
+                        this.level.enemies.pop();
+                    }
+                }
+            })
+        });
     }
-
+    
     pushBottle() {
         for (let i = 0; i < 5; i++) {
             let imagePath;

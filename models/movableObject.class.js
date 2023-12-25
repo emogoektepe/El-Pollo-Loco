@@ -13,7 +13,11 @@ class MovableObject extends DrawableObject {
         bottom: 0
     }
 
-    hitEnemy() {
+    hitBossChicken() {
+        this.energy -= 20;
+    }
+
+    hitChicken() {
         this.energy = 0;
     }
 
@@ -33,7 +37,7 @@ class MovableObject extends DrawableObject {
     isHurt() {
         let timepassed = new Date().getTime() - this.lastHit;
         timepassed = timepassed / 1000;
-        return timepassed < 0.1;
+        return timepassed < 0.2;
     }
 
     isColliding(movableObject) {
