@@ -17,7 +17,7 @@ const createLevelObjects = {
         'img/5_background/layers/1_first_layer/2.png'
     ],
 
-    creatingClouds(amount) {
+    createClouds(amount) {
         const cloudArray = [];
         for (let i = 0; i < amount; i++) {
             const imagePathIndex = i % this.cloudImages.length;
@@ -27,7 +27,7 @@ const createLevelObjects = {
         return cloudArray;
     },
 
-    creatingBackGroundLayer(levelWidth) {
+    createBackGroundLayer(levelWidth) {
         const backgroundArray = [];
         let imagesArraySwitch = true;
         for (let i = -1438; i <= 719 * levelWidth; i += 719) {
@@ -38,5 +38,14 @@ const createLevelObjects = {
             imagesArraySwitch = !imagesArraySwitch;
         }
         return backgroundArray;
+    },
+
+    createEnemys(amount) {
+        const enemys = [];
+        for (let i = 0; i < amount; i++) {
+            enemys.push(new Chicken(i));
+        }
+        return enemys;
     }
+
 };

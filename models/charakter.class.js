@@ -65,6 +65,7 @@ class Character extends MovableObject {
     walking_sound = new Audio('audio/walk.mp3');
     jump_sound = new Audio('audio/jump.mp3');
     hitting_ground = new Audio('audio/hittingGround.mp3');
+    hurt_sound = new Audio('audio/damageTaken.mp3');
     timer = 0;
     offset = {
         top: 110,
@@ -87,7 +88,8 @@ class Character extends MovableObject {
 
 
     animate() {
-        this.walking_sound.volume = 0.1; // ratio button late game
+        this.walking_sound.volume = 0.1;
+        this.hurt_sound. volume = 0.1;
         setInterval(() => {
             if (this.world.keyboard.RIGHT && this.x < this.world.level.level_end_x) {
                 this.moveRight();
@@ -115,6 +117,7 @@ class Character extends MovableObject {
                 this.timer = 0;
                 this.playAnimation(this.IMAGES_DEAD);
             } else if (this.isHurt()) {
+                this.hurt_sound.play();
                 this.timer = 0;
                 this.playAnimation(this.IMAGES_HURT);
             } else if (this.isAboveGround()) {

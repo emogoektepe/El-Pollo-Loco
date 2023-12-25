@@ -13,6 +13,10 @@ class MovableObject extends DrawableObject {
         bottom: 0
     }
 
+    hitEnemy() {
+        this.energy = 0;
+    }
+
     isDead() {
         return this.energy == 0;
     }
@@ -44,6 +48,9 @@ class MovableObject extends DrawableObject {
             if (this.isAboveGround() || this.speedY > 0) {
                 this.y -= this.speedY;
                 this.speedY -= this.acceleration;
+                if (this.y > 150 && this instanceof Character) {
+                    this.y = 150;
+                }
             }
         }, 1000 / 25);
     }

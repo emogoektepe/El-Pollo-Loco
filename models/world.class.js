@@ -12,6 +12,7 @@ class World {
     coin_sound = new Audio('audio/coin.mp3');
     bottle_sound = new Audio('audio/bottleCollect.mp3');
     bottle_throw = new Audio('audio/bottleThrow.mp3');
+    damage_chicken = new Audio('audio/damageChicken.mp3');
     throwCooldown = false;
 
     constructor(canvas, keyboard) {
@@ -47,10 +48,18 @@ class World {
     }
 
     checkCollisions() {
+        this.damage_chicken.volume = 0.1;
         this.level.enemies.forEach((enemy) => {
             if (this.character.isColliding(enemy)) {
-                this.character.hit();
-                this.statusBarHealth.setPercentage(this.character.energy);
+                if (this.character.isAboveGround()) {
+                    this.character.jump();
+                    enemy.hitEnemy();
+                    this.damage_chicken.play();
+                    this.level.enemies = this.level.enemies.filter(obj => obj.id !== enemy.id);
+                } else {
+                    this.character.hit();
+                    this.statusBarHealth.setPercentage(this.character.energy);
+                }
             }
         });
         this.coin_sound.volume = 0.1;
