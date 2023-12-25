@@ -1,5 +1,4 @@
 class Character extends MovableObject {
-
     height = 300;
     width = 150;
     y = 150;
@@ -30,7 +29,6 @@ class Character extends MovableObject {
         'img/2_character_pepe/5_dead/D-54.png',
         'img/2_character_pepe/5_dead/D-55.png',
         'img/2_character_pepe/5_dead/D-56.png',
-        'img/2_character_pepe/5_dead/D-57.png',
     ]
     IMAGES_HURT = [
         'img/2_character_pepe/4_hurt/H-41.png',
@@ -66,6 +64,7 @@ class Character extends MovableObject {
     jump_sound = new Audio('audio/jump.mp3');
     hitting_ground = new Audio('audio/hittingGround.mp3');
     hurt_sound = new Audio('audio/damageTaken.mp3');
+    lose_sound = new Audio('audio/lose.mp3');
     timer = 0;
     offset = {
         top: 110,
@@ -89,7 +88,9 @@ class Character extends MovableObject {
 
     animate() {
         this.walking_sound.volume = 0.1;
-        this.hurt_sound. volume = 0.1;
+        this.hurt_sound.volume = 0.1;
+        this.jump_sound.volume = 0.5;
+        this.lose_sound.volume = 0.1;
         setInterval(() => {
             if (this.world.keyboard.RIGHT && this.x < this.world.level.level_end_x) {
                 this.moveRight();
@@ -105,7 +106,7 @@ class Character extends MovableObject {
                     this.walking_sound.play();
                 }
             }
-            if (this.world.keyboard.SPACE && !this.isAboveGround()) {
+            if (this.world.keyboard.SPACE && !this.isAboveGround() && !this.isHurt()) {
                 this.jump_sound.play();
                 this.jump();
             }
@@ -115,6 +116,10 @@ class Character extends MovableObject {
         setInterval(() => {
             if (this.isDead()) {
                 this.timer = 0;
+                setTimeout(() => {
+                    utils.clearAllIntervals();
+                }, 1000);
+                this.lose_sound.play();
                 this.playAnimation(this.IMAGES_DEAD);
             } else if (this.isHurt()) {
                 this.hurt_sound.play();
