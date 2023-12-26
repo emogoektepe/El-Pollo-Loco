@@ -1,7 +1,7 @@
 class Cloud extends MovableObject {
     height = 250;
     width = 500;
-    static cloudX = 0;
+    static cloudX = -1438;
 
     constructor(cloud) {
         super().loadImage(cloud);

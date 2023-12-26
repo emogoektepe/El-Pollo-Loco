@@ -8,19 +8,21 @@ class World {
     statusBarHealth = new StatusBarHealth();
     statusBarCoin = new StatusBarCoin();
     statusBarBottle = new StatusBarBottle();
+    statusBarHealthBoss = new StatusBarHealthBoss();
     throwableObjects = [];
     coin_sound = new Audio('audio/coin.mp3');
     bottle_sound = new Audio('audio/bottleCollect.mp3');
     bottle_throw = new Audio('audio/bottleThrow.mp3');
     damage_chicken = new Audio('audio/damageChicken.mp3');
+    bossHurt_sound = new Audio('audio/bossHurt.mp3');
     throwCooldown = false;
 
     constructor(canvas, keyboard) {
         this.ctx = canvas.getContext('2d');
         this.canvas = canvas;
         this.keyboard = keyboard;
-        this.pushCoins();
-        this.pushBottle();
+        this.createCoins();
+        this.createBottles();
         this.draw();
         this.setWorld();
         this.run();
@@ -79,32 +81,32 @@ class World {
             }
         });
         const endboss = this.level.enemies.slice(-1)[0];
+        this.bossHurt_sound.volume = 0.1;
         this.throwableObjects.forEach((bottle) => {
             this.level.enemies.forEach((enemy) => {
                 if (bottle.isColliding(enemy) && enemy instanceof Chicken) {
                     bottle.shatterBottle();
                     enemy.hitChicken();
-                    setTimeout(() => {
-                        this.throwableObjects.pop();
-                    }, 100);
+                    this.throwableObjects.shift();
                     this.damage_chicken.play();
                     this.level.enemies = this.level.enemies.filter(obj => obj.id !== enemy.id);
                 } else if (bottle.isColliding(enemy) && enemy instanceof Endboss) {
                     bottle.shatterBottle();
                     enemy.hitBossChicken();
-                    setTimeout(() => {
-                        this.throwableObjects.pop();
-                    }, 100);
-                    this.damage_chicken.play();
+                    this.bossHurt_sound.play();
+                    this.throwableObjects.shift();
+                    this.statusBarHealthBoss.setPercentage(endboss.energy)
                     if (endboss.energy <= 0) {
-                        this.level.enemies.pop();
+                        setTimeout(() => {
+                            this.level.enemies.pop();
+                        }, 1000);
                     }
                 }
             })
         });
     }
-    
-    pushBottle() {
+
+    createBottles() {
         for (let i = 0; i < 5; i++) {
             let imagePath;
             if (Math.random() < 0.5) {
@@ -116,7 +118,7 @@ class World {
         }
     }
 
-    pushCoins() {
+    createCoins() {
         for (let i = 0; i < 10; i++) {
             this.level.coins.push(new Coin(i));
         }
@@ -127,8 +129,9 @@ class World {
     }
 
     draw() {
+        const bossHealtbarIcon = new Image();
+        bossHealtbarIcon.src = 'img/4_enemie_boss_chicken/2_alert/G12.png';
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-
         this.ctx.translate(this.camera_x, 0);
         this.addObjectsToMap(this.level.backgroundObjects);
         this.addObjectsToMap(this.level.clouds);
@@ -137,13 +140,15 @@ class World {
         this.addObjectsToMap(this.level.bottle);
         this.addObjectsToMap(this.throwableObjects);
         this.ctx.translate(-this.camera_x, 0);
-        // fixed objects here
+        // fixed objects here -->
         this.addToMap(this.statusBarHealth);
         this.addToMap(this.statusBarCoin);
         this.addToMap(this.statusBarBottle);
+        this.addToMap(this.statusBarHealthBoss);
+        this.ctx.drawImage(bossHealtbarIcon, 410, 10, 40, 40);
+        // fixed objext here -->
         this.ctx.translate(this.camera_x, 0);
         this.addToMap(this.character);
-
         this.ctx.translate(-this.camera_x, 0);
         // OOP Trick
         let self = this;
