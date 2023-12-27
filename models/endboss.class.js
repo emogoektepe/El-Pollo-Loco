@@ -4,7 +4,7 @@ class Endboss extends MovableObject {
     width = 250;
     y = 60;
     energy = 100;
-    speed = 0.5;
+    speed = 1.5;
     world;
     IMAGES_ALERT = [
         'img/4_enemie_boss_chicken/2_alert/G5.png',
@@ -48,17 +48,16 @@ class Endboss extends MovableObject {
         this.loadImages(this.IMAGES_HURT);
         this.loadImages(this.IMAGES_DEAD);
         this.loadImages(this.IMAGES_WALKING);
-        this.x = 850; //3300
+        this.x = 750;
+        // this.x = 3300;
         this.animate();
-        setInterval(() => {
-            console.log('TODO: Endboss mit World verbinden', this.world);
-        }, 1000);
     }
 
     animate() {
-        // setInterval(() => {
-        //     this.moveLeft();
-        // }, 1000 / 60);
+        setInterval(() => {
+            // this.moveLeft();
+        }, 1000 / 60);
+
 
         setInterval(() => {
             if (this.isHurt()) {
@@ -66,9 +65,9 @@ class Endboss extends MovableObject {
             } else if (this.isDead()) {
                 this.playAnimation(this.IMAGES_DEAD);
             } else {
-                this.playAnimation(this.IMAGES_ALERT);
+                this.playAnimation(this.IMAGES_WALKING);
             }
-        }, 200);
+        }, 150);
     }
 
 }

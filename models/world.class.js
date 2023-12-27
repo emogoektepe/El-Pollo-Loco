@@ -1,5 +1,6 @@
 class World {
     character = new Character();
+    endboss = new Endboss();
     level = level1;
     canvas;
     ctx;
@@ -16,7 +17,6 @@ class World {
     damage_chicken = new Audio('audio/damageChicken.mp3');
     bossHurt_sound = new Audio('audio/bossHurt.mp3');
     throwCooldown = false;
-    endboss = this.level.enemies.slice(-1)[0];
 
     constructor(canvas, keyboard) {
         this.ctx = canvas.getContext('2d');
@@ -30,6 +30,7 @@ class World {
     }
 
     run() {
+        this.level.enemies.push(this.endboss);
         setInterval(() => {
             this.checkCollisions();
             this.checkThrowObjects();
@@ -59,7 +60,7 @@ class World {
                     enemy.hitChicken();
                     this.damage_chicken.play();
                     this.level.enemies = this.level.enemies.filter(obj => obj.id !== enemy.id);
-                } else if (enemy instanceof Chicken || enemy instanceof Endboss) {
+                } else if (enemy instanceof Endboss) {
                     this.character.hit();
                     this.statusBarHealth.setPercentage(this.character.energy);
                 }
@@ -126,6 +127,7 @@ class World {
 
     setWorld() {
         this.character.world = this;
+        this.endboss.world = this;
     }
 
     draw() {

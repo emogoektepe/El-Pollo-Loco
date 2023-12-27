@@ -45,7 +45,6 @@ const createLevelObjects = {
         for (let i = 0; i < amount; i++) {
             enemys.push(new Chicken(i));
         }
-        enemys.push(new Endboss());
         return enemys;
     }
 
