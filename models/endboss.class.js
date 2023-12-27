@@ -4,7 +4,8 @@ class Endboss extends MovableObject {
     width = 250;
     y = 60;
     energy = 100;
-
+    speed = 0.5;
+    world;
     IMAGES_ALERT = [
         'img/4_enemie_boss_chicken/2_alert/G5.png',
         'img/4_enemie_boss_chicken/2_alert/G6.png',
@@ -27,6 +28,12 @@ class Endboss extends MovableObject {
         'img/4_enemie_boss_chicken/5_dead/G25.png',
         'img/4_enemie_boss_chicken/5_dead/G26.png',
     ]
+    IMAGES_WALKING = [
+        'img/4_enemie_boss_chicken/1_walk/G1.png',
+        'img/4_enemie_boss_chicken/1_walk/G2.png',
+        'img/4_enemie_boss_chicken/1_walk/G3.png',
+        'img/4_enemie_boss_chicken/1_walk/G4.png',
+    ]
 
     offset = {
         top: 60,
@@ -40,11 +47,19 @@ class Endboss extends MovableObject {
         this.loadImages(this.IMAGES_ALERT);
         this.loadImages(this.IMAGES_HURT);
         this.loadImages(this.IMAGES_DEAD);
-        this.x = 450; //3300
+        this.loadImages(this.IMAGES_WALKING);
+        this.x = 850; //3300
         this.animate();
+        setInterval(() => {
+            console.log('TODO: Endboss mit World verbinden', this.world);
+        }, 1000);
     }
 
     animate() {
+        // setInterval(() => {
+        //     this.moveLeft();
+        // }, 1000 / 60);
+
         setInterval(() => {
             if (this.isHurt()) {
                 this.playAnimation(this.IMAGES_HURT);

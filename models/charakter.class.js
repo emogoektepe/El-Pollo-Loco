@@ -84,8 +84,8 @@ class Character extends MovableObject {
         this.applyGravity();
         this.animate();
     }
-
-
+    
+    
     animate() {
         this.walking_sound.volume = 0.1;
         this.hurt_sound.volume = 0.1;

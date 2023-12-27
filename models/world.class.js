@@ -16,6 +16,7 @@ class World {
     damage_chicken = new Audio('audio/damageChicken.mp3');
     bossHurt_sound = new Audio('audio/bossHurt.mp3');
     throwCooldown = false;
+    endboss = this.level.enemies.slice(-1)[0];
 
     constructor(canvas, keyboard) {
         this.ctx = canvas.getContext('2d');
@@ -37,7 +38,7 @@ class World {
 
     checkThrowObjects() {
         this.bottle_throw.volume = 0.1;
-        if (this.keyboard.B && !this.throwCooldown && this.statusBarBottle.percentage != 0) {
+        if (this.keyboard.B && !this.throwCooldown && this.statusBarBottle.percentage != 0 && this.endboss.energy > 0) {
             let bottle = new ThrowableObject(this.character.x + 100, this.character.y + 100);
             this.bottle_throw.play();
             this.statusBarBottle.setPercentage(this.statusBarBottle.throwBottle());
@@ -80,23 +81,22 @@ class World {
                 this.statusBarBottle.setPercentage(this.statusBarBottle.collectBottel());
             }
         });
-        const endboss = this.level.enemies.slice(-1)[0];
         this.bossHurt_sound.volume = 0.1;
         this.throwableObjects.forEach((bottle) => {
             this.level.enemies.forEach((enemy) => {
                 if (bottle.isColliding(enemy) && enemy instanceof Chicken) {
                     bottle.shatterBottle();
                     enemy.hitChicken();
-                    this.throwableObjects.shift();
                     this.damage_chicken.play();
                     this.level.enemies = this.level.enemies.filter(obj => obj.id !== enemy.id);
+                    this.throwableObjects.shift();
                 } else if (bottle.isColliding(enemy) && enemy instanceof Endboss) {
                     bottle.shatterBottle();
                     enemy.hitBossChicken();
                     this.bossHurt_sound.play();
                     this.throwableObjects.shift();
-                    this.statusBarHealthBoss.setPercentage(endboss.energy)
-                    if (endboss.energy <= 0) {
+                    this.statusBarHealthBoss.setPercentage(this.endboss.energy)
+                    if (this.endboss.energy <= 0) {
                         setTimeout(() => {
                             this.level.enemies.pop();
                         }, 1000);
