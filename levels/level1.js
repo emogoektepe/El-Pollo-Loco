@@ -1,5 +1,5 @@
 const level1 = new Level(
-    createLevelObjects.createEnemys(0)
+    createLevelObjects.createEnemys(5)
     ,
     createLevelObjects.createBackGroundLayer(5)
     ,

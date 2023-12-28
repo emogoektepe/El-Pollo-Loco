@@ -1,10 +1,9 @@
 class Coin extends MovableObject {
 
     y = 50;
-    x = 250;
     height = 150;
     width = 150;
-    static coinX = 250;
+    static coinX = 550;
     id;
 
     offset = {

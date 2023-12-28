@@ -42,7 +42,7 @@ class DrawableObject {
     }
 
     collectCoin() {
-        this.coinProg += 10;
+        this.coinProg += 20;
         return this.coinProg;
     }
 

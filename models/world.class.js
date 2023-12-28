@@ -34,6 +34,7 @@ class World {
         setInterval(() => {
             this.checkCollisions();
             this.checkThrowObjects();
+            this.endboss.checkDangerArea();
         }, 50);
     }
 
@@ -60,7 +61,7 @@ class World {
                     enemy.hitChicken();
                     this.damage_chicken.play();
                     this.level.enemies = this.level.enemies.filter(obj => obj.id !== enemy.id);
-                } else if (enemy instanceof Endboss) {
+                } else if (enemy instanceof Endboss || enemy instanceof Chicken) {
                     this.character.hit();
                     this.statusBarHealth.setPercentage(this.character.energy);
                 }
@@ -120,7 +121,7 @@ class World {
     }
 
     createCoins() {
-        for (let i = 0; i < 10; i++) {
+        for (let i = 0; i < 5; i++) {
             this.level.coins.push(new Coin(i));
         }
     }
@@ -146,8 +147,10 @@ class World {
         this.addToMap(this.statusBarHealth);
         this.addToMap(this.statusBarCoin);
         this.addToMap(this.statusBarBottle);
-        this.addToMap(this.statusBarHealthBoss);
-        this.ctx.drawImage(bossHealtbarIcon, 410, 10, 40, 40);
+        if(this.character.x + this.character.width + 800 > this.endboss.x) {
+            this.addToMap(this.statusBarHealthBoss);
+            this.ctx.drawImage(bossHealtbarIcon, 410, 10, 40, 40);
+        }
         // fixed objext here -->
         this.ctx.translate(this.camera_x, 0);
         this.addToMap(this.character);
