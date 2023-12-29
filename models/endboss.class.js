@@ -3,10 +3,10 @@ class Endboss extends MovableObject {
     height = 400;
     width = 250;
     y = 60;
-    energy = 100;
-    speed = 3.5;
+    speed = 4.5;
     world;
     danger = false;
+
     IMAGES_ALERT = [
         'img/4_enemie_boss_chicken/2_alert/G5.png',
         'img/4_enemie_boss_chicken/2_alert/G6.png',
@@ -45,7 +45,8 @@ class Endboss extends MovableObject {
         'img/4_enemie_boss_chicken/3_attack/G19.png',
         'img/4_enemie_boss_chicken/3_attack/G20.png',
     ]
-
+    danger_music = new Audio('audio/epicFight.mp3');
+    chicken_scream = new Audio('audio/chickenScream.mp3');
     offset = {
         top: 60,
         bottom: 10,
@@ -60,7 +61,6 @@ class Endboss extends MovableObject {
         this.loadImages(this.IMAGES_DEAD);
         this.loadImages(this.IMAGES_WALKING);
         this.loadImages(this.IMAGES_ATTACK);
-        // this.x = 750;
         this.x = 3300;
         this.animate();
     }
@@ -95,8 +95,13 @@ class Endboss extends MovableObject {
     }
 
     checkDangerArea() {
+        this.chicken_scream.volume = 0.1;
+        this.danger_music.volume = 0.1;
         if (this.characterNearEndboss()) {
+            this.chicken_scream.play();
+            this.danger_music.play();
             this.danger = true;
+
         }
     }
 

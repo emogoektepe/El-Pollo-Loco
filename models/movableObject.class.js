@@ -15,11 +15,7 @@ class MovableObject extends DrawableObject {
 
     hitBossChicken() {
         this.energy -= 20;
-        if (this.energy < 20) {
-            this.energy = 0;
-        } else {
-            this.lastHit = new Date().getTime();
-        }
+        return this.energy;
     }
 
     hitChicken() {

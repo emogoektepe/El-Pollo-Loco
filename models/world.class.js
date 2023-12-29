@@ -17,6 +17,7 @@ class World {
     damage_chicken = new Audio('audio/damageChicken.mp3');
     bossHurt_sound = new Audio('audio/bossHurt.mp3');
     throwCooldown = false;
+    bottleId = 0;
 
     constructor(canvas, keyboard) {
         this.ctx = canvas.getContext('2d');
@@ -41,10 +42,11 @@ class World {
     checkThrowObjects() {
         this.bottle_throw.volume = 0.1;
         if (this.keyboard.B && !this.throwCooldown && this.statusBarBottle.percentage != 0 && this.endboss.energy > 0) {
-            let bottle = new ThrowableObject(this.character.x + 100, this.character.y + 100);
+            let bottle = new ThrowableObject(this.character.x + 100, this.character.y + 100, this.bottleId);
             this.bottle_throw.play();
             this.statusBarBottle.setPercentage(this.statusBarBottle.throwBottle());
             this.throwableObjects.push(bottle);
+            this.bottleId++;
             this.throwCooldown = true;
             setTimeout(() => {
                 this.throwCooldown = false;
@@ -91,14 +93,13 @@ class World {
                     enemy.hitChicken();
                     this.damage_chicken.play();
                     this.level.enemies = this.level.enemies.filter(obj => obj.id !== enemy.id);
-                    this.throwableObjects.shift();
+                    this.throwableObjects = this.throwableObjects.filter(obj => obj.id !== bottle.id);
                 } else if (bottle.isColliding(enemy) && enemy instanceof Endboss) {
                     bottle.shatterBottle();
-                    enemy.hitBossChicken();
                     this.bossHurt_sound.play();
-                    this.throwableObjects.shift();
-                    this.statusBarHealthBoss.setPercentage(this.endboss.energy)
-                    if (this.endboss.energy <= 0) {
+                    this.throwableObjects = this.throwableObjects.filter(obj => obj.id !== bottle.id);
+                    this.statusBarHealthBoss.setPercentage(enemy.hitBossChicken());
+                    if (this.endboss.energy == 0) {
                         setTimeout(() => {
                             this.level.enemies.pop();
                         }, 1000);
@@ -142,21 +143,23 @@ class World {
         this.addObjectsToMap(this.level.coins);
         this.addObjectsToMap(this.level.bottle);
         this.addObjectsToMap(this.throwableObjects);
+        this.ctx.translate(this.endboss.x, 0);
+        if (this.endboss.energy != 0) {
+            this.addToMap(this.statusBarHealthBoss);
+            this.ctx.drawImage(bossHealtbarIcon, 170, 70, 40, 40);
+        }
+        this.ctx.translate(-this.endboss.x, 0);
         this.ctx.translate(-this.camera_x, 0);
         // fixed objects here -->
         this.addToMap(this.statusBarHealth);
         this.addToMap(this.statusBarCoin);
         this.addToMap(this.statusBarBottle);
-        if(this.character.x + this.character.width + 800 > this.endboss.x) {
-            this.addToMap(this.statusBarHealthBoss);
-            this.ctx.drawImage(bossHealtbarIcon, 410, 10, 40, 40);
-        }
         // fixed objext here -->
         this.ctx.translate(this.camera_x, 0);
         this.addToMap(this.character);
         this.ctx.translate(-this.camera_x, 0);
         // OOP Trick
-        let self = this;
+        const self = this;
         requestAnimationFrame(() => {
             self.draw();
         });
