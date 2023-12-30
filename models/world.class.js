@@ -1,7 +1,7 @@
 class World {
     character = new Character();
     endboss = new Endboss();
-    level = level1;
+    level = levels.level1;
     canvas;
     ctx;
     keyboard;
@@ -11,11 +11,6 @@ class World {
     statusBarBottle = new StatusBarBottle();
     statusBarHealthBoss = new StatusBarHealthBoss();
     throwableObjects = [];
-    coin_sound = new Audio('audio/coin.mp3');
-    bottle_sound = new Audio('audio/bottleCollect.mp3');
-    bottle_throw = new Audio('audio/bottleThrow.mp3');
-    damage_chicken = new Audio('audio/damageChicken.mp3');
-    bossHurt_sound = new Audio('audio/bossHurt.mp3');
     throwCooldown = false;
     bottleId = 0;
 
@@ -40,10 +35,9 @@ class World {
     }
 
     checkThrowObjects() {
-        this.bottle_throw.volume = 0.1;
         if (this.keyboard.B && !this.throwCooldown && this.statusBarBottle.percentage != 0 && this.endboss.energy > 0) {
             let bottle = new ThrowableObject(this.character.x + 100, this.character.y + 100, this.bottleId);
-            this.bottle_throw.play();
+            sounds.BOTTLE_THROW.play();
             this.statusBarBottle.setPercentage(this.statusBarBottle.throwBottle());
             this.throwableObjects.push(bottle);
             this.bottleId++;
@@ -55,13 +49,12 @@ class World {
     }
 
     checkCollisions() {
-        this.damage_chicken.volume = 0.1;
         this.level.enemies.forEach((enemy) => {
             if (this.character.isColliding(enemy)) {
                 if (this.character.isAboveGround() && enemy instanceof Chicken) {
                     this.character.jump();
                     enemy.hitChicken();
-                    this.damage_chicken.play();
+                    sounds.DAMAGE_CHICKEN.play();
                     this.level.enemies = this.level.enemies.filter(obj => obj.id !== enemy.id);
                 } else if (enemy instanceof Endboss || enemy instanceof Chicken) {
                     this.character.hit();
@@ -69,34 +62,31 @@ class World {
                 }
             }
         });
-        this.coin_sound.volume = 0.1;
         this.level.coins.forEach((coin) => {
             if (this.character.isColliding(coin)) {
-                this.coin_sound.play();
+                sounds.COIN_SOUND.play();
                 this.level.coins = this.level.coins.filter(obj => obj.id !== coin.id);
                 this.statusBarCoin.setPercentage(this.statusBarCoin.collectCoin());
             }
         });
-        this.bottle_sound.volume = 0.1;
         this.level.bottle.forEach((bottle) => {
             if (this.character.isColliding(bottle)) {
-                this.bottle_sound.play();
+                sounds.BOTTLE_SOUND.play();
                 this.level.bottle = this.level.bottle.filter(obj => obj.id !== bottle.id);
                 this.statusBarBottle.setPercentage(this.statusBarBottle.collectBottel());
             }
         });
-        this.bossHurt_sound.volume = 0.1;
         this.throwableObjects.forEach((bottle) => {
             this.level.enemies.forEach((enemy) => {
                 if (bottle.isColliding(enemy) && enemy instanceof Chicken) {
                     bottle.shatterBottle();
                     enemy.hitChicken();
-                    this.damage_chicken.play();
+                    sounds.DAMAGE_CHICKEN.play();
                     this.level.enemies = this.level.enemies.filter(obj => obj.id !== enemy.id);
                     this.throwableObjects = this.throwableObjects.filter(obj => obj.id !== bottle.id);
                 } else if (bottle.isColliding(enemy) && enemy instanceof Endboss) {
                     bottle.shatterBottle();
-                    this.bossHurt_sound.play();
+                    sounds.BOSSHURT_SOUND.play();
                     this.throwableObjects = this.throwableObjects.filter(obj => obj.id !== bottle.id);
                     this.statusBarHealthBoss.setPercentage(enemy.hitBossChicken());
                     if (this.endboss.energy == 0) {
@@ -177,7 +167,7 @@ class World {
         }
         movableObject.draw(this.ctx);
         // movableObject.drawFrame(this.ctx);
-        movableObject.drawFrameOffSet(this.ctx);
+        // movableObject.drawFrameOffSet(this.ctx);
         if (movableObject.otherDirection) {
             this.flipImageBack(movableObject);
         }
