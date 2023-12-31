@@ -10,7 +10,8 @@ const sounds = {
     BOTTLE_THROW: new Audio('audio/bottleThrow.mp3'),
     DAMAGE_CHICKEN: new Audio('audio/damageChicken.mp3'),
     BOSSHURT_SOUND: new Audio('audio/bossHurt.mp3'),
-    
+    INTRO_SOUND: new Audio('audio/introSound.mp3'),
+
     allSounds: [],
 
     initialize() {
@@ -25,6 +26,8 @@ const sounds = {
     },
 
     toggleMuteState() {
+        const img = document.getElementById('toggleSoundButton');
+        img.src = img.src.includes('unmute') ? './img/assets/mute.png' : './img/assets/unmute.png';
         this.allSounds.forEach(sound => {
             if (sound.volume === 0) {
                 sound.volume = 0.1;

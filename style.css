@@ -29,6 +29,7 @@ canvas {
 }
 
 #canvas-wrap {
+    border: 3px solid black;
     position: relative;
 }
 
@@ -40,17 +41,38 @@ canvas {
     background-image: url(./img/9_intro_outro_screens/start/startscreen_2.png);
     background-size: cover;
     background-repeat: no-repeat;
-    background-position: bottom 0 left -110px;
+    background-position: right;
 }
 
 
 .startButton {
+    font-family: 'zabras', Arial, Helvetica, sans-serif;
+    font-size: 36px;
     position: absolute;
     left: 50%;
-    top: 40px;
+    top: 20px;
     width: 200px;
     height: 40px;
     transform: translateX(-50%);
+    cursor: pointer;
+    background: linear-gradient(180deg, rgba(255,203,26,1) 0%, rgba(255,158,0,1) 100%);
+    border: 3px solid black;
+}
+
+#infoButton {
+    width: 40px;
+    cursor: pointer;
+    position: absolute;
+    top: 25px;
+    right: 75px;
+}
+
+#toggleSoundButton {
+    width: 50px;
+    cursor: pointer;
+    position: absolute;
+    top: 20px;
+    right: 10px;
 }
 
 @media only screen and (max-width: 720px) {

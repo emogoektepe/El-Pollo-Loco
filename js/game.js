@@ -4,9 +4,14 @@ let keyboard = new Keyboard();
 let gameStart = false;
 
 function init() {
+    sounds.INTRO_SOUND.play();
     sounds.initialize();
     canvas = document.getElementById('canvas');
     world = new World(canvas, keyboard);
+    sounds.INTRO_SOUND.addEventListener('ended', function () {
+        sounds.INTRO_SOUND.currentTime = 0;
+        sounds.INTRO_SOUND.play();
+    });
 }
 
 function startGame() {

@@ -57,6 +57,7 @@ class Endboss extends MovableObject {
         if (this.characterNearEndboss()) {
             sounds.CHICKEN_SCREAM.play();
             sounds.DANGER_MUSIC.play();
+            sounds.INTRO_SOUND.pause();
             this.danger = true;
 
         }

@@ -51,12 +51,12 @@ class World {
     checkCollisions() {
         this.level.enemies.forEach((enemy) => {
             if (this.character.isColliding(enemy)) {
-                if (this.character.isAboveGround() && enemy instanceof Chicken) {
+                if (this.character.isAboveGround() && enemy instanceof Chicken && this.character.speedY < 0) {
                     this.character.jump();
                     enemy.hitChicken();
                     sounds.DAMAGE_CHICKEN.play();
                     this.level.enemies = this.level.enemies.filter(obj => obj.id !== enemy.id);
-                } else if (enemy instanceof Endboss || enemy instanceof Chicken) {
+                } else if (enemy instanceof Endboss || enemy instanceof Chicken && !this.character.isAboveGround()) {
                     this.character.hit();
                     this.statusBarHealth.setPercentage(this.character.energy);
                 }
