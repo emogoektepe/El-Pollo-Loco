@@ -24,23 +24,32 @@
     <script src="models/level.class.js"></script>
     <script src="models/endboss.class.js"></script>
     <script src="models/throwableObject.class.js"></script>
-    <script src="js/game.js"></script>
     <script src="js/createLevelObjects.js"></script>
     <script src="js/utils.js"></script>
     <script src="js/sounds.js"></script>
     <script src="js/assets.js"></script>
     <script src="levels/levels.js"></script>
+    <script src="js/game.js"></script>
 </head>
 
-<body onload="init()">
+<body onload="game.init()">
     <h1>El pollo loco</h1>
     <div id="canvas-wrap">
         <canvas id="canvas" width="720px" height="480px"></canvas>
         <div id="overlay">
-            <button class="startButton" onclick="startGame()">Start Game</button>
+            <button class="startButton" onclick="game.startGame()">Start Game</button>
             <img id="toggleSoundButton" src="./img/assets/unmute.png" onclick="sounds.toggleMuteState()"/>
-            <img id="infoButton" src="./img/assets/info.png" onclick="console.log('TODO: INFO SCREEN');"/>
-            
+            <img id="infoButton" src="./img/assets/info.png" onclick="game.openInfoDialog()"/>
+        </div>
+        <div id="infos-wrap" onclick="game.closeInfoDialog()">
+            <div id="info" onclick="game.doNotClose(event)">
+                <div class="controls">
+                    <p>Controls</p>
+                </div>
+                <div class="credits">
+                    <p>Game Information! (Attention)</p>
+                </div>
+            </div>
         </div>
     </div>
 </body>
