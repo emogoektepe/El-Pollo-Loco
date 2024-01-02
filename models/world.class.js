@@ -103,9 +103,9 @@ class World {
         for (let i = 0; i < 5; i++) {
             let imagePath;
             if (Math.random() < 0.5) {
-                imagePath = 'img/6_salsa_bottle/2_salsa_bottle_on_ground.png';
+                imagePath = './img/6_salsa_bottle/2_salsa_bottle_on_ground.png';
             } else {
-                imagePath = 'img/6_salsa_bottle/1_salsa_bottle_on_ground.png';
+                imagePath = './img/6_salsa_bottle/1_salsa_bottle_on_ground.png';
             }
             this.level.bottle.push(new Bottle(i, imagePath));
         }
@@ -124,7 +124,7 @@ class World {
 
     draw() {
         const bossHealtbarIcon = new Image();
-        bossHealtbarIcon.src = 'img/4_enemie_boss_chicken/2_alert/G12.png';
+        bossHealtbarIcon.src = './img/4_enemie_boss_chicken/2_alert/G12.png';
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
         this.ctx.translate(this.camera_x, 0);
         this.addObjectsToMap(this.level.backgroundObjects);

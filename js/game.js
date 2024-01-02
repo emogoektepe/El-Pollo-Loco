@@ -7,7 +7,6 @@ const game = {
     init() {
         sounds.INTRO_SOUND.play();
         sounds.initialize();
-        this.initializeKeyboard();
         this.canvas = document.getElementById('canvas');
         this.world = new World(this.canvas, this.keyboard);
         sounds.INTRO_SOUND.addEventListener('ended', function () {
@@ -18,12 +17,20 @@ const game = {
 
     startGame() {
         this.gameStart = true;
+        const mobileTab = document.getElementById('mobileTab');
+        if (utils.isMobile()) {
+            mobileTab.style.display = 'flex';
+        }
         document.getElementById('overlay').style.display = 'none';
         levels.level1.enemies.forEach(enemy => {
             if (enemy instanceof Chicken) {
                 enemy.move();
             }
         });
+    },
+
+    newGame() {
+        document.getElementById('endScreen').style.display = 'none';
     },
 
     openInfoDialog() {
@@ -37,54 +44,6 @@ const game = {
     doNotClose(event) {
         event.stopPropagation();
     },
-
-    initializeKeyboard() {
-        window.addEventListener('keydown', (e) => {
-            if (this.gameStart) {
-                if (e.keyCode == 32) {
-                    this.keyboard.SPACE = true;
-                }
-                if (e.keyCode == 37) {
-                    this.keyboard.LEFT = true;
-                }
-                if (e.keyCode == 38) {
-                    this.keyboard.UP = true;
-                }
-                if (e.keyCode == 39) {
-                    this.keyboard.RIGHT = true;
-                }
-                if (e.keyCode == 40) {
-                    this.keyboard.DOWN = true;
-                }
-                if (e.keyCode == 66) {
-                    this.keyboard.B = true;
-                }
-            }
-        }),
-
-            window.addEventListener('keyup', (e) => {
-                if (this.gameStart) {
-                    if (e.keyCode == 32) {
-                        this.keyboard.SPACE = false;
-                    }
-                    if (e.keyCode == 37) {
-                        this.keyboard.LEFT = false;
-                    }
-                    if (e.keyCode == 38) {
-                        this.keyboard.UP = false;
-                    }
-                    if (e.keyCode == 39) {
-                        this.keyboard.RIGHT = false;
-                    }
-                    if (e.keyCode == 40) {
-                        this.keyboard.DOWN = false;
-                    }
-                    if (e.keyCode == 66) {
-                        this.keyboard.B = false;
-                    }
-                }
-            });
-    }
 }
 
 

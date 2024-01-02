@@ -13,7 +13,7 @@ class Coin extends MovableObject {
         right: 50
     }
     constructor(id) {
-        super().loadImage('img/8_coin/coin_2.png');
+        super().loadImage('./img/8_coin/coin_2.png');
         this.x = Coin.coinX;
         Coin.coinX += 300;
         this.id = id;

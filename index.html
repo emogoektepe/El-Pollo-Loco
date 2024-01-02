@@ -29,29 +29,58 @@
     <script src="js/sounds.js"></script>
     <script src="js/assets.js"></script>
     <script src="levels/levels.js"></script>
-    <script src="js/game.js"></script>
 </head>
 
 <body onload="game.init()">
-    <h1>El pollo loco</h1>
     <div id="canvas-wrap">
+        <div id="endScreen" class="endScreen">
+            <h2 id="endScreenHeader"></h2>
+            <div class="endScreenButtons">
+                <button onclick="location.reload()">Home</button>
+                <button onclick="game.newGame()">New Game</button>
+            </div>
+        </div>
         <canvas id="canvas" width="720px" height="480px"></canvas>
         <div id="overlay">
-            <button class="startButton" onclick="game.startGame()">Start Game</button>
-            <img id="toggleSoundButton" src="./img/assets/unmute.png" onclick="sounds.toggleMuteState()"/>
-            <img id="infoButton" src="./img/assets/info.png" onclick="game.openInfoDialog()"/>
+            <button class="startButton" onclick="game.startGame()" id="startGame">Start Game</button>
+            <img id="toggleSoundButton" src="./img/assets/unmute.png" onclick="sounds.toggleMuteState()" />
+            <img id="infoButton" src="./img/assets/info.png" onclick="game.openInfoDialog()" />
         </div>
         <div id="infos-wrap" onclick="game.closeInfoDialog()">
             <div id="info" onclick="game.doNotClose(event)">
                 <div class="controls">
-                    <p>Controls</p>
+                    <p class="infoHeader">Controls (PC)<img onclick="game.closeInfoDialog()" class="closeImage"
+                            src="./img/assets/close.png" alt=""></p>
+                    <p>Arrow Left: Move Left</p>
+                    <p>Arrow Right: Move Right</p>
+                    <p>Space: Jump</p>
+                    <p>B: Throw Bottle</p>
                 </div>
                 <div class="credits">
-                    <p>Game Information! (Attention)</p>
+                    <p class="infoHeader">Game Information! (Attention)</p>
+                    <p>Pepe can't go through the boss.</p>
+                    <p>Pepe cannot jump while taking damage.</p>
+                    <p>Do not waste a single throw.</p>
+                    <p>Take care of yellow chicken. Very FAST.</p>
                 </div>
             </div>
         </div>
+        <div class="mobileButtons" id="mobileTab">
+            <div class="mobileLeft">
+                <img src="./img/assets/leftArrow.png" alt="" id="leftArrow">
+                <img src="./img/assets/rightArrow.png" alt="" id="rightArrow">
+            </div>
+            <div class="mobileRight">
+                <img src="./img/assets/upArrow.png" alt="" id="upArrow">
+                <img src="./img/assets/bottleBtn.png" alt="" id="bottleBtn">
+            </div>
+        </div>
     </div>
+    <div class="rotateDevice">
+        <img src="./img/assets/rotateDevice.png" alt="">
+        <div>ROTATE YOUR DEVICE</div>
+    </div>
+    <script src="js/game.js"></script>
 </body>
 
 </html>

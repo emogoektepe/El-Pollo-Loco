@@ -9,14 +9,14 @@ class ThrowableObject extends MovableObject {
     id;
 
     constructor(x, y, id) {
-        super().loadImage('img/6_salsa_bottle/bottle_rotation/1_bottle_rotation.png');
+        super().loadImage('./img/6_salsa_bottle/bottle_rotation/1_bottle_rotation.png');
         this.loadImages(assets.IMAGES_ROTATE_BOTTLE);
         this.loadImages(assets.IMAGES_SPLASH);
         this.id = id;
         this.x = x;
         this.y = y;
-        this.height = 60;
-        this.width = 60;
+        this.height = 80;
+        this.width = 80;
         this.throw();
     }
 
@@ -32,6 +32,7 @@ class ThrowableObject extends MovableObject {
     }
 
     shatterBottle() {
+        sounds.BOTTLE_SHATTER.play();
         setInterval(() => {
             this.playAnimation(assets.IMAGES_SPLASH);
         }, 50);

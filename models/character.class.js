@@ -11,9 +11,12 @@ class Character extends MovableObject {
         left: 20,
         right: 20
     }
+    energy = 1;
+    losingScreen = document.getElementById('endScreen');
+    losingTitle = document.getElementById('endScreenHeader');
 
     constructor() {
-        super().loadImage('img/2_character_pepe/1_idle/idle/I-1.png');
+        super().loadImage('./img/2_character_pepe/1_idle/idle/I-1.png');
         this.loadImages(assets.IMAGES_WALKING_CHARACTER);
         this.loadImages(assets.IMAGES_JUMPING_CHARACTER);
         this.loadImages(assets.IMAGES_DEAD_CHARACTER);
@@ -52,7 +55,11 @@ class Character extends MovableObject {
                 this.timer = 0;
                 setTimeout(() => {
                     utils.clearAllIntervals();
-                }, 1000);
+                    sounds.INTRO_SOUND.pause();
+                    this.losingTitle.innerText = 'YOU LOSE!';
+                    this.losingScreen.style.display = 'flex';
+                    game.gameStart = false;
+                }, 500);
                 sounds.LOSE_SOUND_CHARACTER.play();
                 this.playAnimation(assets.IMAGES_DEAD_CHARACTER);
             } else if (this.isHurt()) {

@@ -12,9 +12,11 @@ class Endboss extends MovableObject {
         left: 0,
         right: 0
     }
+    winningScreen = document.getElementById('endScreen');
+    winningTitle = document.getElementById('endScreenHeader');
 
     constructor() {
-        super().loadImage('img/4_enemie_boss_chicken/2_alert/G5.png');
+        super().loadImage('./img/4_enemie_boss_chicken/2_alert/G5.png');
         this.loadImages(assets.IMAGES_ALERT_BOSS);
         this.loadImages(assets.IMAGES_HURT_BOSS);
         this.loadImages(assets.IMAGES_DEAD_BOSS);
@@ -39,6 +41,15 @@ class Endboss extends MovableObject {
                 this.playAnimation(assets.IMAGES_HURT_BOSS);
             } else if (this.isDead()) {
                 clearInterval(moveLeft);
+                setTimeout(() => {
+                    sounds.DANGER_MUSIC.pause();
+                    utils.clearAllIntervals();
+                    sounds.WIN.play();
+                    game.gameStart = false;
+                    this.winningTitle.innerText = 'YOU WIN!';
+                    this.winningScreen.style.display = 'flex';
+
+                }, 500);
                 this.playAnimation(assets.IMAGES_DEAD_BOSS);
             } else if (this.danger) {
                 this.playAnimation(assets.IMAGES_WALKING_BOSS);
