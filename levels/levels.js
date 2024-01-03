@@ -1,5 +1,18 @@
-const levels = {
+/**
+ * Object containing different game levels.
+ * @typedef {Object} Levels
+ * @property {Level} level1 - First level of the game.
+ */
 
+/**
+ * Object representing different game levels.
+ * @type {Levels}
+ */
+const levels = {
+    /**
+     * First level of the game.
+     * @type {Level}
+     */
     level1: new Level(
         createLevelObjects.createEnemys(15)
         ,

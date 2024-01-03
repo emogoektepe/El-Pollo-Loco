@@ -1,3 +1,31 @@
+/**
+ * Object containing image paths for different game assets.
+ * @typedef {Object} Assets
+ * @property {string[]} IMAGES_WALKING_CHARACTER - Array of paths for walking character images.
+ * @property {string[]} IMAGES_JUMPING_CHARACTER - Array of paths for jumping character images.
+ * @property {string[]} IMAGES_DEAD_CHARACTER - Array of paths for dead character images.
+ * @property {string[]} IMAGES_HURT_CHARACTER - Array of paths for hurt character images.
+ * @property {string[]} IMAGES_IDLE_CHARACTER - Array of paths for idle character images.
+ * @property {string[]} IMAGES_LONG_IDLE_CHARACTER - Array of paths for long idle character images.
+ * @property {string[]} IMAGES_WALKING_CHICKEN - Array of paths for walking chicken images.
+ * @property {string[]} IMAGES_WALKING_SMALL_CHICKEN - Array of paths for walking small chicken images.
+ * @property {string[]} IMAGES_ALERT_BOSS - Array of paths for alert boss images.
+ * @property {string[]} IMAGES_HURT_BOSS - Array of paths for hurt boss images.
+ * @property {string[]} IMAGES_DEAD_BOSS - Array of paths for dead boss images.
+ * @property {string[]} IMAGES_WALKING_BOSS - Array of paths for walking boss images.
+ * @property {string[]} IMAGES_ATTACK_BOSS - Array of paths for attacking boss images.
+ * @property {string[]} IMAGES_STATUSBAR_BOTTLE - Array of paths for bottle status bar images.
+ * @property {string[]} IMAGES_STATUSBAR_COIN - Array of paths for coin status bar images.
+ * @property {string[]} IMAGES_STATUSBAR_HEALTH - Array of paths for health status bar images.
+ * @property {string[]} IMAGES_STATUSBAR_BOSS - Array of paths for boss status bar images.
+ * @property {string[]} IMAGES_ROTATE_BOTTLE - Array of paths for rotating bottle images.
+ * @property {string[]} IMAGES_SPLASH - Array of paths for splash images.
+ */
+
+/**
+ * Game assets object containing various image paths.
+ * @type {Assets}
+ */
 const assets = {
     IMAGES_WALKING_CHARACTER: [
         './img/2_character_pepe/2_walk/W-21.png',

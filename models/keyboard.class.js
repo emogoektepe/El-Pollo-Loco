@@ -1,3 +1,6 @@
+/**
+ * Handles keyboard and touch events for game controls.
+ */
 class Keyboard {
     LEFT = false;
     RIGHT = false;
@@ -6,11 +9,17 @@ class Keyboard {
     SPACE = false;
     B = false;
 
+    /**
+     * Constructs a Keyboard object and initializes keyboard and touch event listeners.
+     */
     constructor() {
         this.initializeKeyboard();
         this.initializeMobileButtons();
     }
 
+    /**
+     * Initializes keyboard event listeners for controlling the game.
+     */
     initializeKeyboard() {
         window.addEventListener('keydown', (e) => {
             if (game.gameStart) {
@@ -59,6 +68,9 @@ class Keyboard {
             });
     }
 
+    /**
+     * Initializes touch event listeners for mobile controls.
+     */
     initializeMobileButtons(){
         document.getElementById('leftArrow').addEventListener('touchstart', (e) => {
             e.preventDefault();

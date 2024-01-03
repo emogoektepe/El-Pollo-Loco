@@ -1,3 +1,7 @@
+/**
+ * Represents a coin object in the game.
+ * @extends MovableObject
+ */
 class Coin extends MovableObject {
 
     y = 50;
@@ -12,6 +16,11 @@ class Coin extends MovableObject {
         left: 50,
         right: 50
     }
+
+    /**
+     * Creates a coin object.
+     * @param {any} id - The unique identifier for the coin.
+     */
     constructor(id) {
         super().loadImage('./img/8_coin/coin_2.png');
         this.x = Coin.coinX;

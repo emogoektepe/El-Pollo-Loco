@@ -1,3 +1,7 @@
+/**
+ * Represents a bottle object in the game.
+ * @extends MovableObject
+ */
 class Bottle extends MovableObject {
 
     y = 360;
@@ -13,7 +17,12 @@ class Bottle extends MovableObject {
         left: 20,
         right: 20
     }
-
+    
+    /**
+     * Creates a bottle object.
+     * @param {any} id - The unique identifier for the bottle.
+     * @param {string} img - The image path for the bottle object.
+     */
     constructor(id, img) {
         super().loadImage(img);
         this.x = Bottle.bottleX;
